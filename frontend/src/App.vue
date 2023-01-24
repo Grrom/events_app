@@ -5,14 +5,14 @@ import HelloWorld from './components/HelloWorld.vue'
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+    <img alt="Vue logo" class="logo" src="@/assets/events_icon.png" width="250" height="250" />
 
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      <HelloWorld msg="Hello There!" />
 
       <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/">Events</RouterLink>
+        <RouterLink to="/addEvent">Add Event</RouterLink>
       </nav>
     </div>
   </header>
@@ -21,14 +21,12 @@ import HelloWorld from './components/HelloWorld.vue'
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
+
 
 .logo {
   display: block;
   margin: 0 auto 2rem;
+  background-color: #4cd4ca;
 }
 
 nav {
