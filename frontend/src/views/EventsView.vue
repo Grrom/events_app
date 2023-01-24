@@ -12,7 +12,6 @@ onMounted(async () => {
 async function  getEvents(){
   let response = await ApiHelper.getEvents()
   response.forEach(element => {
-    console.log(element)
     events.value.push(element)
   });
 }

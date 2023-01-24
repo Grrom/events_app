@@ -9,9 +9,10 @@ app = Flask(__name__)
 CORS(app)
 
 
-@app.route("/create_event")
+@app.route("/create_event", methods=["POST"])
 def create_event():
-    args = request.args
+    args = request.form
+    print(args)
     firebase_helper.create_event(
         args.get("event_name"), args.get("event_date"))
     return "event created"

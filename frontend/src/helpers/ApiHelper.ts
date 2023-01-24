@@ -16,4 +16,16 @@ export default class ApiHelper {
       return events;
     });
   }
+
+  static async createEvent(name: string, date: string): Promise<boolean> {
+    let formData = new FormData();
+    formData.append("event_name", name);
+    formData.append("event_date", date);
+    return await fetch(this.url + "create_event", {
+      method: "POST",
+      body: formData,
+    }).then(async (data) => {
+      return true;
+    });
+  }
 }
