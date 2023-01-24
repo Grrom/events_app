@@ -30,9 +30,10 @@ def update_event():
     return "event updated"
 
 
-@app.route("/delete_event")
+@app.route("/delete_event", methods=["POST"])
 def delete_event():
-    firebase_helper.delete_event(request.args.get("event_id"))
+    args = request.form
+    firebase_helper.delete_event(args.get("id"))
     return "event deleted"
 
 

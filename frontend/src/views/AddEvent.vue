@@ -15,6 +15,7 @@
 <script setup lang="ts">
 import AlertHelper from '@/helpers/AlertHelper';
 import ApiHelper from '@/helpers/ApiHelper';
+import router from '@/router';
 
 function addEvent(){
   let name = (document.getElementById("name") as HTMLInputElement)?.value;
@@ -32,6 +33,7 @@ function addEvent(){
 
   ApiHelper.createEvent(name, date).then((value=>{
     AlertHelper.successToast("Event successfully added.")
+    router.push('/')
     adding.close()
   })).catch((e)=>{
     AlertHelper.errorToast("Failed to add Event.")

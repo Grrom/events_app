@@ -18,12 +18,31 @@ import AlertHelper from "@/helpers/AlertHelper";
 import ApiHelper from "@/helpers/ApiHelper";
 import EventModel from "@/types/EventModel";
 
+const emit = defineEmits(['delete'])
+
 const props = defineProps({
   item: EventModel
 })
 
 function deleteEvent() {
-  AlertHelper.confirmDialog({question:"Are you sure you want to delete this event?"}).then(confirmed=>console.log(confirmed))
+  AlertHelper.confirmDialog({question:"Are you sure you want to delete this event?"}).then(confirmed=>{
+    if(confirmed){
+      let deleting = AlertHelper.showLoading("Deleting Event.")
+      ApiHelper.deleteEvent(props.item!.id).then(success=>{
+        if(success){
+          AlertHelper.successToast("Event deleted successfully.")
+          emit("delete", props.item!.id)
+        }else{
+          AlertHelper.successToast("Failed to delete event.")
+        }
+        deleting.close()
+      }).catch(e=>{
+          AlertHelper.successToast("Failed to delete event.")
+          deleting.close()
+
+      })
+    }
+  })
 }
 
 function updateEvent() {
