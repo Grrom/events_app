@@ -1,8 +1,8 @@
 <template>
   <div class="item">
     <div class="details">
-      <div class="name">{{ props.item!.name }}</div>
-      <div class="date">{{ props.item!.date }}</div>
+      <div class="name">Name: {{ props.item!.name }}</div>
+      <div class="date">Date: {{ props.item!.date }}</div>
     </div>
     <div class="delete-button" v-on:click="deleteEvent()">
       <img alt="delete-icon" class="delete-icon" src="@/assets/delete.svg" width="24" height="24" />

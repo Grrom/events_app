@@ -24,8 +24,12 @@ export default class ApiHelper {
     return await fetch(this.url + "create_event", {
       method: "POST",
       body: formData,
-    }).then(async (data) => {
-      return true;
-    });
+    })
+      .then(async (data) => {
+        return true;
+      })
+      .catch((e) => {
+        return false;
+      });
   }
 }

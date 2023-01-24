@@ -158,7 +158,7 @@ export default class AlertHelper {
     let loading = Swal.fire({
       title: message,
       didOpen: () => {
-        Swal.showLoading(new HTMLButtonElement());
+        Swal.showLoading(null);
       },
     });
     return loading;

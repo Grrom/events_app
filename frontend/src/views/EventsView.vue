@@ -23,16 +23,18 @@ async function  getEvents(){
       <img src="@/assets/loading.gif" alt="">
     </div>
 
-    <div v-show="events.length>0" >
-      <div v-for="(item, index) in events">
-        <EventItem :item="item"/>
-      </div>
+    <div class="events-container" v-show="events.length>0" >
+      <EventItem v-for="(item, index) in events" :item="item"/>
     </div>
 
   </div>
 </template>
 
 <style>
+.events-container{
+  height: 100vh;
+  overflow: auto;
+}
 .loading-container{
   display: flex;
   justify-content: center;

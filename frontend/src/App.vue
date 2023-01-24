@@ -26,6 +26,7 @@ import HelloWorld from './components/HelloWorld.vue'
 .logo {
   display: block;
   margin: 0 auto 2rem;
+  border-radius: 24px;
   background-color: #4cd4ca;
 }
 
