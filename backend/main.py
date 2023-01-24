@@ -12,7 +12,6 @@ CORS(app)
 @app.route("/create_event", methods=["POST"])
 def create_event():
     args = request.form
-    print(args)
     firebase_helper.create_event(
         args.get("event_name"), args.get("event_date"))
     return "event created"
@@ -25,9 +24,9 @@ def list_event():
 
 @app.route("/update_event")
 def update_event():
-    args = request.args
+    args = request.form
     firebase_helper.update_event(
-        args.get("id"), args.get("name"), args.get("date"))
+        args.get("id"), args.get("event_name"), args.get("event_date"))
     return "event updated"
 
 

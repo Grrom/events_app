@@ -27,8 +27,9 @@ def get_events():
     events = []
 
     for doc in docs:
-        print(f'{doc.id} => {doc.to_dict()}')
-        events.append(doc.to_dict())
+        dict = doc.to_dict()
+        dict["id"] = doc.id
+        events.append(dict)
 
     return events
 
