@@ -115,7 +115,9 @@ export default class AlertHelper {
           type="date"
           class="swal2-input"
           value="${defaultDate}"
-          id="date"> 
+          id="date"
+          min=${new Date().toISOString().split("T")[0]}
+          > 
       </span>`,
       title: question,
       showCancelButton: true,

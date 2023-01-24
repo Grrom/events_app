@@ -3,11 +3,11 @@
     <h1>Add event</h1>
     <div class="container">
       <input  id="name" type="text" placeholder="name">
-      <input id="date" type="date" placeholder="date">
+      <input id="date" type="date" placeholder="date" :min="today">
     </div>
     <div class="add-button" v-on:click="addEvent()">
       <span class="add-text">Add Event</span>
-      <img alt="add-icon" class="add-icon" src="@/assets/add.svg" width="24" height="24" />
+      <img alt="add-icon" class="add-icon" src="@/assets/add.svg" width="24" height="24"/>
     </div>
   </div>
 </template>
@@ -16,6 +16,8 @@
 import AlertHelper from '@/helpers/AlertHelper';
 import ApiHelper from '@/helpers/ApiHelper';
 import router from '@/router';
+
+let today = new Date().toISOString().split('T')[0];
 
 function addEvent(){
   let name = (document.getElementById("name") as HTMLInputElement)?.value;
