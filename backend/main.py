@@ -22,7 +22,7 @@ def list_event():
     return firebase_helper.get_events()
 
 
-@app.route("/update_event")
+@app.route("/update_event", methods=["POST"])
 def update_event():
     args = request.form
     firebase_helper.update_event(

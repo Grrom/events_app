@@ -39,6 +39,7 @@ def delete_event(id):
 
 
 def update_event(id, name, date):
+    print(id)
     doc_ref = db.collection(events_collection).document(id)
     doc_ref.set({
         u'name': name,

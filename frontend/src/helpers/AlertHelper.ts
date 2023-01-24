@@ -15,7 +15,6 @@ function fireToast({ icon, message, duration, showTimer }: fireToastProps) {
     showConfirmButton: false,
     timer: duration ?? 3000,
     timerProgressBar: showTimer ?? true,
-
     didOpen: (toast: HTMLElement) => {
       toast.addEventListener("mouseenter", Swal.stopTimer);
       toast.addEventListener("mouseleave", Swal.resumeTimer);
@@ -28,9 +27,9 @@ function fireToast({ icon, message, duration, showTimer }: fireToastProps) {
 
 interface numberInputAlertProps {
   question: string;
+  defaultName?: string;
+  defaultDate?: string;
   onConfirm: (value: any) => void;
-  confirmButtonText?: string;
-  cancelButtonText?: string;
 }
 
 interface confirmDialogProps {
@@ -38,6 +37,13 @@ interface confirmDialogProps {
   confirmButtonColor?: string;
   cancelButtonText?: string;
   confirmButtonText?: string;
+}
+
+interface textInputProps {
+  question: string;
+  defaultValue?: string;
+  confirmButtonText?: string;
+  onConfirm: (value: any) => void;
 }
 
 export default class AlertHelper {
@@ -70,14 +76,18 @@ export default class AlertHelper {
     });
   };
 
-  static textInputAlert = (
-    question: string,
-    onConfirm: (value: any) => void
-  ) => {
+  static textInputAlert = ({
+    question,
+    defaultValue,
+    confirmButtonText,
+    onConfirm,
+  }: textInputProps) => {
     Swal.fire({
       icon: "question",
       title: question,
+      inputValue: defaultValue,
       input: "text",
+      confirmButtonText: confirmButtonText ?? "OK",
       showCancelButton: true,
     }).then((value: any) => {
       if (value.isConfirmed) {
@@ -86,35 +96,36 @@ export default class AlertHelper {
     });
   };
 
-  static numberInputAlert = async ({
+  static updateEventAlert = async ({
     question,
+    defaultDate,
+    defaultName,
     onConfirm,
-    confirmButtonText,
-    cancelButtonText,
   }: numberInputAlertProps) => {
     const value_1 = await Swal.fire({
       icon: "question",
       html: `
       <span id="number-input-alert">
-        <small>Appalling</small>
         <input
-          type="range"
+          type="text"
           class="swal2-input"
-          min="1"
-          max="10"
-          id="range-value"> 
-        <small>Masterpiece</small>
+          value="${defaultName}"
+          id="name"> 
+        <input
+          type="date"
+          class="swal2-input"
+          value="${defaultDate}"
+          id="date"> 
       </span>`,
       title: question,
       showCancelButton: true,
-      confirmButtonText: confirmButtonText,
-      cancelButtonText: cancelButtonText,
       allowOutsideClick: false,
     });
     if (value_1.isConfirmed) {
-      onConfirm(
-        (document.getElementById("range-value") as HTMLInputElement).value
-      );
+      onConfirm({
+        name: (document.getElementById("name") as HTMLInputElement).value,
+        date: (document.getElementById("date") as HTMLInputElement).value,
+      });
     } else {
       onConfirm(undefined);
     }

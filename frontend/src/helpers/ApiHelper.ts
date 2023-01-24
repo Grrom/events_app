@@ -40,7 +40,7 @@ export default class ApiHelper {
     date: string
   ): Promise<boolean> {
     let formData = new FormData();
-    formData.append("id", name);
+    formData.append("id", id);
     formData.append("event_name", name);
     formData.append("event_date", date);
     return await fetch(this.url + "update_event", {

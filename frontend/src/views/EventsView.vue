@@ -32,6 +32,10 @@ async function  getEvents(){
 
 <style>
 .events-container{
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+
   height: 100vh;
   overflow: auto;
 }
