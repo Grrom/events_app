@@ -1,9 +1,12 @@
+from flask_cors import CORS
 from flask import Flask
 from flask import request
 
 import helpers.firebase_helper as firebase_helper
 
 app = Flask("/")
+app = Flask(__name__)
+CORS(app)
 
 
 @app.route("/create_event")
