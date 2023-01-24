@@ -118,6 +118,12 @@ export default class AlertHelper {
           id="date"
           min=${new Date().toISOString().split("T")[0]}
           > 
+        <input
+          type="time"
+          class="swal2-input"
+          value="${defaultDate}"
+          id="time"
+          > 
       </span>`,
       title: question,
       showCancelButton: true,
@@ -127,6 +133,7 @@ export default class AlertHelper {
       onConfirm({
         name: (document.getElementById("name") as HTMLInputElement).value,
         date: (document.getElementById("date") as HTMLInputElement).value,
+        time: (document.getElementById("time") as HTMLInputElement).value,
       });
     } else {
       onConfirm(undefined);

@@ -12,11 +12,12 @@ db = firestore.client()
 events_collection = "events"
 
 
-def create_event(name, date):
+def create_event(name, date, time):
     doc_ref = db.collection(events_collection).document()
     doc_ref.set({
         u'name': name,
         u'date': date,
+        u'time': time,
     })
 
 
@@ -38,10 +39,11 @@ def delete_event(id):
     return db.collection(events_collection).document(id).delete()
 
 
-def update_event(id, name, date):
+def update_event(id, name, date, time):
     print(id)
     doc_ref = db.collection(events_collection).document(id)
     doc_ref.set({
         u'name': name,
         u'date': date,
+        u'time': time,
     })

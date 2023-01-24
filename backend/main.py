@@ -13,7 +13,7 @@ CORS(app)
 def create_event():
     args = request.form
     firebase_helper.create_event(
-        args.get("event_name"), args.get("event_date"))
+        args.get("event_name"), args.get("event_date"), args.get("event_time"))
     return "event created"
 
 
@@ -26,7 +26,7 @@ def list_event():
 def update_event():
     args = request.form
     firebase_helper.update_event(
-        args.get("id"), args.get("event_name"), args.get("event_date"))
+        args.get("id"), args.get("event_name"), args.get("event_date"), args.get("event_time"))
     return "event updated"
 
 

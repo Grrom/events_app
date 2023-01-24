@@ -10,17 +10,25 @@ export default class ApiHelper {
       let response = await data.json();
       let events: Array<EventModel> = [];
       response.forEach((element: any) => {
-        events.push(new EventModel(element.id, element.name, element.date));
+        console.log(element);
+        events.push(
+          new EventModel(element.id, element.name, element.date, element.time)
+        );
       });
 
       return events;
     });
   }
 
-  static async createEvent(name: string, date: string): Promise<boolean> {
+  static async createEvent(
+    name: string,
+    date: string,
+    time: string
+  ): Promise<boolean> {
     let formData = new FormData();
     formData.append("event_name", name);
     formData.append("event_date", date);
+    formData.append("event_time", time);
     return await fetch(this.url + "create_event", {
       method: "POST",
       body: formData,
@@ -36,12 +44,14 @@ export default class ApiHelper {
   static async updateEvent(
     id: string,
     name: string,
-    date: string
+    date: string,
+    time: string
   ): Promise<boolean> {
     let formData = new FormData();
     formData.append("id", id);
     formData.append("event_name", name);
     formData.append("event_date", date);
+    formData.append("event_time", time);
     return await fetch(this.url + "update_event", {
       method: "POST",
       body: formData,

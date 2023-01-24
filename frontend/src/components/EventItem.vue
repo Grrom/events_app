@@ -3,6 +3,7 @@
     <div class="details">
       <div class="name">Name: {{ props.item!.name }}</div>
       <div class="date">Date: {{ props.item!.date }}</div>
+      <div class="time">Date: {{ props.item!.time }}</div>
     </div>
     <div class="update-button" v-on:click="updateEvent()">
       <img alt="update-icon" class="update-icon" src="@/assets/update.svg" width="24" height="24" />
@@ -39,7 +40,6 @@ function deleteEvent() {
       }).catch(e=>{
           AlertHelper.successToast("Failed to delete event.")
           deleting.close()
-
       })
     }
   })
@@ -47,13 +47,25 @@ function deleteEvent() {
 
 function updateEvent() {
   AlertHelper.updateEventAlert({question:"Update Event",defaultName:props.item!.name, defaultDate:props.item!.date, onConfirm:(value)=>{
+
     if(value!==undefined){
-      if(value.name === props.item!.name && value.date === props.item!.date){
+      let time = value.time;
+      if(Number(time.split(":")[0])>=19&&Number(time.split(":")[1])!==0){
+        AlertHelper.errorToast("Time must not be past 8 PM.")
+        return
+      }
+
+      if(Number(time.split(":")[0])<8&&Number(time.split(":")[1])!==0){
+        AlertHelper.errorToast("Time must past 8 AM.")
+        return
+      }
+
+      if(value.name === props.item!.name && value.date === props.item!.date&& value.time === props.item!.time){
         AlertHelper.infoToast("Please change atleast one value.")
         return;
       }
       let loading=  AlertHelper.showLoading("Updating Event.")
-      ApiHelper.updateEvent(props.item!.id, value.name, value.date).then(success=>{
+      ApiHelper.updateEvent(props.item!.id, value.name, value.date, value.time).then(success=>{
         if(success){
           props.item!.name=value.name;
           AlertHelper.successToast("Event Updated")
@@ -72,6 +84,7 @@ function updateEvent() {
 <style scoped>
 
 .item{
+  align-items: center;
   margin: 12px;
   padding: 12px;
   background-color: white;

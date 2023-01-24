@@ -4,6 +4,7 @@
     <div class="container">
       <input  id="name" type="text" placeholder="name">
       <input id="date" type="date" placeholder="date" :min="today">
+      <input id="time" type="time" placeholder="time" max="20:00">
     </div>
     <div class="add-button" v-on:click="addEvent()">
       <span class="add-text">Add Event</span>
@@ -22,6 +23,18 @@ let today = new Date().toISOString().split('T')[0];
 function addEvent(){
   let name = (document.getElementById("name") as HTMLInputElement)?.value;
   let date = (document.getElementById("date") as HTMLInputElement)?.value;
+  let time = (document.getElementById("time") as HTMLInputElement)?.value;
+  console.log(time)
+
+  if(Number(time.split(":")[0])>=19&&Number(time.split(":")[1])!==0){
+    AlertHelper.errorToast("Time must not be past 8 PM.")
+    return
+  }
+
+  if(Number(time.split(":")[0])<8&&Number(time.split(":")[1])!==0){
+    AlertHelper.errorToast("Time must past 8 AM.")
+    return
+  }
 
   if(name === ""){
     AlertHelper.errorToast("Please Input the event name.")
@@ -31,9 +44,14 @@ function addEvent(){
     AlertHelper.errorToast("Input the event date")
     return
   }
+  if(time === ""){
+    AlertHelper.errorToast("Please Input the event time.")
+    return
+  }
+
   let adding =AlertHelper.showLoading("Adding Event.");
 
-  ApiHelper.createEvent(name, date).then((value=>{
+  ApiHelper.createEvent(name, date, time).then((value=>{
     AlertHelper.successToast("Event successfully added.")
     router.push('/')
     adding.close()
