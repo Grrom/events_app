@@ -1,39 +1,36 @@
 from flask import Flask
 from flask import request
 
-import json
+import helpers.firebase_helper as firebase_helper
 
 app = Flask("/")
 
-json_dir = "./jsons/"
+
+@app.route("/create_event")
+def create_event():
+    args = request.args
+    firebase_helper.create_event(
+        args.get("event_name"), args.get("event_date"))
+    return "event created"
 
 
-@app.route("/createEvent")
-def createEvent():
-    with json.load(f'{json_dir}events.json') as f:
-        print(type(f))
-        # json.dump(request.args.get("event_name"), f)
-    return "createEvent"
+@app.route("/list_events")
+def list_event():
+    return firebase_helper.get_events()
 
 
-@app.route("/listEvent")
-def listEvent():
-    with open('data.json', 'w') as f:
-        return f
+@app.route("/update_event")
+def update_event():
+    args = request.args
+    firebase_helper.update_event(
+        args.get("id"), args.get("name"), args.get("date"))
+    return "event updated"
 
 
-@app.route("/updateEvent")
-def updateEvent():
-    events = ""
-    with open('data.json', 'w') as f:
-        events = f
-
-    return f
-
-
-@app.route("/deleteEvent")
-def deleteEvent():
-    return "deleteEvent"
+@app.route("/delete_event")
+def delete_event():
+    firebase_helper.delete_event(request.args.get("event_id"))
+    return "event deleted"
 
 
 app.run(host="0.0.0.0", port=8080)
