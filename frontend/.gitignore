@@ -26,3 +26,7 @@ coverage
 *.njsproj
 *.sln
 *.sw?
+
+
+#firebase
+.\backend\events-app-34c6b-firebase-adminsdk-ct9gf-9e145312b4.json
