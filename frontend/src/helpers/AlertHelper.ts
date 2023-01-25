@@ -29,6 +29,7 @@ interface numberInputAlertProps {
   question: string;
   defaultName?: string;
   defaultDate?: string;
+  defaultTime?: string;
   onConfirm: (value: any) => void;
 }
 
@@ -100,6 +101,7 @@ export default class AlertHelper {
     question,
     defaultDate,
     defaultName,
+    defaultTime,
     onConfirm,
   }: numberInputAlertProps) => {
     const value_1 = await Swal.fire({
@@ -123,6 +125,7 @@ export default class AlertHelper {
           class="swal2-input"
           value="${defaultDate}"
           id="time"
+          value="${defaultTime}"
           > 
       </span>`,
       title: question,

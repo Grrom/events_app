@@ -44,10 +44,21 @@ function deleteEvent() {
 }
 
 function updateEvent() {
-  AlertHelper.updateEventAlert({question:"Update Event",defaultName:props.item!.name, defaultDate:props.item!.date, onConfirm:(value)=>{
+  AlertHelper.updateEventAlert({question:"Update Event",defaultName:props.item!.name, defaultDate:props.item!.date,defaultTime:props.item!.time,  onConfirm:(value)=>{
 
     if(value!==undefined){
       let time = value.time;
+      let now = new Date();
+      var hourNow = now.getHours();
+      var minNow = now.getMinutes();
+
+      if(value.date === new Date().toISOString().split('T')[0]){
+        if(Number(time.split(":")[0])<hourNow || (Number(time.split(":")[0])===hourNow && Number(time.split(":")[1])<minNow)){
+          AlertHelper.errorToast("Cannot select time that is already past the current time.")
+          return
+        }
+      }
+
       if(Number(time.split(":")[0])>=19&&Number(time.split(":")[1])!==0){
         AlertHelper.errorToast("Time must not be past 8 PM.")
         return

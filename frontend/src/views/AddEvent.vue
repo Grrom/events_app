@@ -28,12 +28,25 @@ function addEvent(){
   let date = (document.getElementById("date") as HTMLInputElement)?.value;
   let time = (document.getElementById("time") as HTMLInputElement)?.value;
 
+  let now = new Date();
+  var hourNow = now.getHours();
+  var minNow = now.getMinutes();
+
+
   for(let i = 0; i<(eventsStore.events!==undefined?eventsStore.events!.length:0); i++){
     if(eventsStore.getByIndex(i)?.date === date && eventsStore.getByIndex(i)?.time == time){
       AlertHelper.errorToast("Sorry that date and time is already taken, please choose another date or time.")
       return
     }
   }
+
+  if(date==today){
+    if(Number(time.split(":")[0])<hourNow || (Number(time.split(":")[0])===hourNow && Number(time.split(":")[1])<minNow)){
+      AlertHelper.errorToast("Cannot select time that is already past the current time.")
+      return
+    }
+  }
+
 
   if(Number(time.split(":")[0])>=19&&Number(time.split(":")[1])!==0){
     AlertHelper.errorToast("Time must not be past 8 PM.")
