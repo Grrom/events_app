@@ -14,7 +14,7 @@ def create_event():
     args = request.form
     firebase_helper.create_event(
         args.get("event_name"), args.get("event_date"), args.get("event_time"))
-    return "event created"
+    return "event added"
 
 
 @app.route("/list_events")

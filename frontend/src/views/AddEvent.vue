@@ -17,14 +17,15 @@
 import AlertHelper from '@/helpers/AlertHelper';
 import ApiHelper from '@/helpers/ApiHelper';
 import router from '@/router';
+import { useEventsStore } from '@/stores/events';
 
+let eventsStore = useEventsStore()
 let today = new Date().toISOString().split('T')[0];
 
 function addEvent(){
   let name = (document.getElementById("name") as HTMLInputElement)?.value;
   let date = (document.getElementById("date") as HTMLInputElement)?.value;
   let time = (document.getElementById("time") as HTMLInputElement)?.value;
-  console.log(time)
 
   if(Number(time.split(":")[0])>=19&&Number(time.split(":")[1])!==0){
     AlertHelper.errorToast("Time must not be past 8 PM.")
@@ -52,6 +53,7 @@ function addEvent(){
   let adding =AlertHelper.showLoading("Adding Event.");
 
   ApiHelper.createEvent(name, date, time).then((value=>{
+    eventsStore.setNeedsRefresh()
     AlertHelper.successToast("Event successfully added.")
     router.push('/')
     adding.close()

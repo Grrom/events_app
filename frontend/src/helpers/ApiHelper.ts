@@ -34,6 +34,7 @@ export default class ApiHelper {
       body: formData,
     })
       .then(async (data) => {
+        console.log(await data.json());
         return true;
       })
       .catch((e) => {

@@ -1,15 +1,15 @@
 <template>
   <div class="events">
-    <div v-if="events===undefined" class="loading-container">
+    <div v-if="eventsStore.events===undefined" class="loading-container">
       <img src="@/assets/loading.gif" alt="">
     </div>
 
-    <div v-else-if="events!.length===0" class="loading-container">
-      no events
+    <div v-else-if="eventsStore.events!.length===0" class="loading-container">
+      there are no events right now.
     </div>
 
-    <div class="events-container" v-if="(events?.length??0)>0" >
-      <EventItem v-for="(item, index) in events" :item="item" @delete="deleteEvent"/>
+    <div class="events-container" v-if="(eventsStore.events?.length??0)>0" >
+      <EventItem v-for="(item, _) in eventsStore.events" :item="item" @delete="deleteEvent" :id="_"/>
     </div>
 
   </div>
@@ -17,34 +17,31 @@
 
 <script setup lang="ts">
 import ApiHelper from '@/helpers/ApiHelper';
-import type EventModel from '@/types/EventModel';
+import { useEventsStore } from '@/stores/events';
 import { onMounted, ref } from 'vue';
 import EventItem from '../components/EventItem.vue'
 
 
-const events = ref<Array<EventModel>>();
+const eventsStore = useEventsStore();
 onMounted(async () => {
   getEvents()
 })
 async function  getEvents(){
   let response = await ApiHelper.getEvents()
-  events.value=[];
-  response.forEach(element => {
-    events.value!.push(element)
-  });
+  eventsStore.setEvents(response);
 }
 
 function deleteEvent(id:string){
   let toRemoveIndex = undefined
-  for(let i = 0; i < events.value!.length; i++  ){
-    if(events.value![i].id === id){
+  for(let i = 0; i < eventsStore.events!.length; i++  ){
+    if(eventsStore.events![i].id === id){
       toRemoveIndex =i 
       break
     }
   }
 
   if(toRemoveIndex!==undefined){
-    events.value!.splice(toRemoveIndex, 1)
+    eventsStore.events!.splice(toRemoveIndex, 1)
   }
 }
 </script>

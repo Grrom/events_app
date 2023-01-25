@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "babel": "^6.23.0",
+    "pinia": "^2.0.29",
     "sweetalert2": "^11.7.0",
     "tiny-emitter": "^2.1.0",
     "vue": "^3.2.45",
