@@ -1,11 +1,7 @@
-<script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-</script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/events_icon.png" width="250" height="250" />
+    <img alt="App logo" class="logo" src="@/assets/events_icon.png" width="250" height="250" />
 
     <div class="wrapper">
       <HelloWorld msg="Hello There!" />
@@ -20,8 +16,13 @@ import HelloWorld from './components/HelloWorld.vue'
   <RouterView />
 </template>
 
-<style scoped>
+<script setup lang="ts">
+import { RouterLink, RouterView } from 'vue-router'
+import HelloWorld from './components/HelloWorld.vue'
 
+</script>
+
+<style scoped>
 
 .logo {
   display: block;

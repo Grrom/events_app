@@ -10,7 +10,6 @@ export default class ApiHelper {
       let response = await data.json();
       let events: Array<EventModel> = [];
       response.forEach((element: any) => {
-        console.log(element);
         events.push(
           new EventModel(element.id, element.name, element.date, element.time)
         );
@@ -34,7 +33,6 @@ export default class ApiHelper {
       body: formData,
     })
       .then(async (data) => {
-        console.log(await data.json());
         return true;
       })
       .catch((e) => {

@@ -3,7 +3,7 @@
     <div class="details">
       <div class="name">Name: {{ props.item!.name }}</div>
       <div class="date">Date: {{ props.item!.date }}</div>
-      <div class="time">Date: {{ props.item!.time }}</div>
+      <div class="time">Time: {{ props.item!.time }}</div>
     </div>
     <ActionButton :color="ActionButtonColor.brown" icon="/src/assets/update.svg" :run-action="updateEvent"/>
     <ActionButton :color="ActionButtonColor.red" icon="/src/assets/delete.svg" :run-action="deleteEvent"/>
