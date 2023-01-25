@@ -1,6 +1,10 @@
 
 <template>
-  <div v-if="userStore.isLoggedIn">
+  <div v-if="userStore.isCheckingLogin" class="loading">
+    <img src="@/assets/loading.gif" alt="">
+  </div>
+
+  <div v-else-if="userStore.isLoggedIn">
     <header>
       <img alt="App logo" class="logo" src="@/assets/events_icon.png" width="250" height="250" />
 
@@ -15,6 +19,7 @@
     </header>
     <RouterView />
   </div>
+
   <div v-else-if="!userStore.isLoggedIn">
     <LoginSignupView/>
   </div>
@@ -22,11 +27,26 @@
 
 <script setup lang="ts">
 import { useUserStore } from '@/stores/user';
+import { onMounted } from 'vue';
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+import { authenticationHelper } from './main';
 import LoginSignupView from './views/LoginSignupView.vue';
 
 let userStore = useUserStore();
+
+onMounted(()=>{
+  const unsubscribe = authenticationHelper.auth.onAuthStateChanged(
+    async (user) => {
+      if (user === null) {
+        userStore.user = null;
+      } else {
+        userStore.setUser(user);
+      }
+      unsubscribe();
+    }
+  );
+})
 
 </script>
 
@@ -44,6 +64,13 @@ nav {
   font-size: 12px;
   text-align: center;
   margin-top: 2rem;
+}
+.loading{
+  display: block;
+  text-align: center;
+  padding-top: 36px;
+
+  margin: auto;
 }
 
 nav a.router-link-exact-active {
