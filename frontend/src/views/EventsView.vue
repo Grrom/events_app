@@ -28,7 +28,7 @@ onMounted(async () => {
 })
 async function  getEvents(){
   let response = await ApiHelper.getEvents()
-  eventsStore.setEvents([...response,...response]);
+  eventsStore.setEvents(response);
 }
 
 function deleteEvent(id:string){
