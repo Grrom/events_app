@@ -5,12 +5,8 @@
       <div class="date">Date: {{ props.item!.date }}</div>
       <div class="time">Date: {{ props.item!.time }}</div>
     </div>
-    <div class="update-button" v-on:click="updateEvent()">
-      <img alt="update-icon" class="update-icon" src="@/assets/update.svg" width="24" height="24" />
-    </div>
-    <div class="delete-button" v-on:click="deleteEvent()">
-      <img alt="delete-icon" class="delete-icon" src="@/assets/delete.svg" width="24" height="24" />
-    </div>
+    <ActionButton :color="ActionButtonColor.brown" icon="/src/assets/update.svg" :run-action="updateEvent"/>
+    <ActionButton :color="ActionButtonColor.red" icon="/src/assets/delete.svg" :run-action="deleteEvent"/>
   </div>
 </template>
 
@@ -18,6 +14,8 @@
 import AlertHelper from "@/helpers/AlertHelper";
 import ApiHelper from "@/helpers/ApiHelper";
 import EventModel from "@/types/EventModel";
+import ActionButtonColor from "@/types/ActionButtonColor";
+import ActionButton from '../components/ActionButton.vue'
 
 const emit = defineEmits(['delete'])
 
@@ -85,12 +83,14 @@ function updateEvent() {
 
 .item{
   align-items: center;
-  margin: 12px;
+  margin: 4px;
   padding: 12px;
   background-color: white;
   border-radius: 12px;
   box-shadow: 1px 1px #dadada;
   display: flex;
+  min-width: 200px;
+  max-width: 300px;
 }
 
 .details{
@@ -100,51 +100,4 @@ function updateEvent() {
 .name{
   font-weight: bold;
 }
-
-.delete-button{
-  background-color: red;
-  padding: 12px;
-  border-radius: 12px;
-}
-
-.delete-button:hover{
-  transition: 100ms;
-  transform: scale(1.02);
-}
-
-.delete-button:active {
-  transform: scale(0.9);
-  box-shadow: 0 0 0 0 #fff;
-}
-
-.delete-icon{
-  display: block;
-  filter: invert(96%) sepia(6%) saturate(241%) hue-rotate(227deg) brightness(117%) contrast(100%);
-}
-
-.update-button{
-  margin-right: 16px;
-  background-color: brown;
-  padding: 12px;
-  border-radius: 12px;
-}
-
-.update-button:hover{
-  transition: 100ms;
-  transform: scale(1.02);
-}
-
-.update-button:active {
-  transform: scale(0.9);
-  box-shadow: 0 0 0 0 #fff;
-}
-
-.update-icon{
-  display: block;
-  filter: invert(96%) sepia(6%) saturate(241%) hue-rotate(227deg) brightness(117%) contrast(100%);
-}
-
-
-
-
 </style>

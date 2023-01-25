@@ -9,7 +9,7 @@
     </div>
 
     <div class="events-container" v-if="(eventsStore.events?.length??0)>0" >
-      <EventItem v-for="(item, _) in eventsStore.events" :item="item" @delete="deleteEvent" :id="_"/>
+      <EventItem v-for="(item, _) in eventsStore.events" :item="item" @delete="deleteEvent"/>
     </div>
 
   </div>
@@ -28,7 +28,7 @@ onMounted(async () => {
 })
 async function  getEvents(){
   let response = await ApiHelper.getEvents()
-  eventsStore.setEvents(response);
+  eventsStore.setEvents([...response,...response]);
 }
 
 function deleteEvent(id:string){
@@ -46,15 +46,17 @@ function deleteEvent(id:string){
 }
 </script>
 
-<style>
+<style scoped>
+.events{
+  width: 100%;
+}
 .events-container{
   justify-content: center;
   display: flex;
-  flex-direction: column;
-
-  max-height: 100vh;
-  overflow: auto;
+  flex-wrap: wrap;
+  max-height: 95vh;
 }
+
 .loading-container{
   display: flex;
   justify-content: center;

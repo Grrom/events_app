@@ -6,10 +6,9 @@
       <input id="date" type="date" placeholder="date" :min="today">
       <input id="time" type="time" placeholder="time" max="20:00">
     </div>
-    <div class="add-button" v-on:click="addEvent()">
+    <ActionButton :color="ActionButtonColor.green" icon="/src/assets/add.svg" :run-action="addEvent">
       <span class="add-text">Add Event</span>
-      <img alt="add-icon" class="add-icon" src="@/assets/add.svg" width="24" height="24"/>
-    </div>
+    </ActionButton>
   </div>
 </template>
 
@@ -17,6 +16,8 @@
 import AlertHelper from '@/helpers/AlertHelper';
 import ApiHelper from '@/helpers/ApiHelper';
 import router from '@/router';
+import ActionButtonColor from "@/types/ActionButtonColor";
+import ActionButton from '../components/ActionButton.vue'
 import { useEventsStore } from '@/stores/events';
 
 let eventsStore = useEventsStore()
@@ -53,7 +54,6 @@ function addEvent(){
   let adding =AlertHelper.showLoading("Adding Event.");
 
   ApiHelper.createEvent(name, date, time).then((value=>{
-    eventsStore.setNeedsRefresh()
     AlertHelper.successToast("Event successfully added.")
     router.push('/')
     adding.close()
