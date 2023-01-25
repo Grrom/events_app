@@ -1,4 +1,9 @@
-import type { Auth } from "firebase/auth";
+import {
+  sendEmailVerification,
+  sendSignInLinkToEmail,
+  type Auth,
+  type UserCredential,
+} from "firebase/auth";
 import type { FirebaseApp } from "@firebase/app";
 import {
   getAuth,
@@ -33,7 +38,12 @@ export default class AuthenticationHelper {
     return signOut(this.auth);
   }
 
-  public promptEmailVerification(email: string) {
+  public async promptEmailVerification(auth: UserCredential, email: string) {
+    console.log(
+      await sendEmailVerification(auth.user, {
+        url: "http://localhost:5173/",
+      })
+    );
     return AlertHelper.infoAlert(
       "We've sent you an email to verify your account in: " + email
     );

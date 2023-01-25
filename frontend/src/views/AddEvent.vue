@@ -85,10 +85,15 @@ function addEvent(){
 </script>
 
 <style>
+
+
 .add-event{
   padding: 16px;
+  max-width: 500px;
+  width: 100%;
   text-align: center;
   align-items: center;
+  margin: auto;
 }
 
 input{

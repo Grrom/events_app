@@ -64,6 +64,10 @@ nav a:first-of-type {
   border: 0;
 }
 
+header {
+  margin: 32px;
+}
+
 @media (min-width: 1024px) {
   header {
     display: flex;
