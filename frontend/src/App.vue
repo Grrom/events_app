@@ -1,24 +1,32 @@
 
 <template>
-  <header>
-    <img alt="App logo" class="logo" src="@/assets/events_icon.png" width="250" height="250" />
+  <div v-if="userStore.isLoggedIn">
+    <header>
+      <img alt="App logo" class="logo" src="@/assets/events_icon.png" width="250" height="250" />
 
-    <div class="wrapper">
-      <HelloWorld msg="Hello There!" />
+      <div class="wrapper">
+        <HelloWorld msg="Hello There!" />
 
-      <nav>
-        <RouterLink to="/">Events</RouterLink>
-        <RouterLink to="/addEvent">Add Event</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+        <nav>
+          <RouterLink to="/">Events</RouterLink>
+          <RouterLink to="/addEvent">Add Event</RouterLink>
+        </nav>
+      </div>
+    </header>
+    <RouterView />
+  </div>
+  <div v-else-if="!userStore.isLoggedIn">
+    <LoginSignupView/>
+  </div>
 </template>
 
 <script setup lang="ts">
+import { useUserStore } from '@/stores/user';
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+import LoginSignupView from './views/LoginSignupView.vue';
+
+let userStore = useUserStore();
 
 </script>
 
