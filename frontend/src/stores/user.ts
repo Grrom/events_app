@@ -34,6 +34,20 @@ export const useUserStore = defineStore("user", {
           AlertHelper.errorToast(Helpers.getFirebaseError(e));
         });
     },
+    logout() {
+      let signingOut = AlertHelper.showLoading("Signing Out.");
+      authenticationHelper
+        .signOut()
+        .then(() => {
+          AlertHelper.successToast("Signed out succesfully!");
+          this.setUser(undefined);
+        })
+        .catch((e) => {
+          AlertHelper.errorToast(Helpers.getFirebaseError(e));
+          signingOut.close();
+        });
+      authenticationHelper.signOut();
+    },
     signup(email: string, password: string) {
       let signingUp = AlertHelper.showLoading("Signing up in...");
 

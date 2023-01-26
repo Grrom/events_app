@@ -15,6 +15,10 @@
           <RouterLink to="/">Events</RouterLink>
           <RouterLink to="/addEvent">Add Event</RouterLink>
         </nav>
+
+        <ActionButton :color="ActionButtonColor.red" icon="/src/assets/logout.svg" :run-action="logout">
+          <div class="logout-text">Logout</div>
+        </ActionButton>
       </div>
     </header>
     <RouterView />
@@ -26,20 +30,31 @@
 </template>
 
 <script setup lang="ts">
+import ActionButtonColor from "@/types/ActionButtonColor";
 import { useUserStore } from '@/stores/user';
 import { onMounted } from 'vue';
 import { RouterLink, RouterView } from 'vue-router'
+import ActionButton from './components/ActionButton.vue';
 import HelloWorld from './components/HelloWorld.vue'
 import { authenticationHelper } from './main';
 import LoginSignupView from './views/LoginSignupView.vue';
+import AlertHelper from "./helpers/AlertHelper";
 
 let userStore = useUserStore();
+
+function logout(){
+  AlertHelper.confirmDialog({question:"Are you sure you want to signout?"}).then((confirmed)=>{
+    if(confirmed){
+      userStore.logout()
+    }
+  })
+}
 
 onMounted(()=>{
   const unsubscribe = authenticationHelper.auth.onAuthStateChanged(
     async (user) => {
       if (user === null) {
-        userStore.user = null;
+        userStore.user = undefined;
       } else {
         userStore.setUser(user);
       }
@@ -63,7 +78,7 @@ nav {
   width: 100%;
   font-size: 12px;
   text-align: center;
-  margin-top: 2rem;
+  margin: 2rem 0;
 }
 .loading{
   display: block;
@@ -93,6 +108,12 @@ nav a:first-of-type {
 
 header {
   margin: 32px;
+}
+
+.logout-text{
+  color: white;
+  font-weight: bold;
+  margin-right: 12px;
 }
 
 @media (min-width: 1024px) {

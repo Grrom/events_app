@@ -14,6 +14,8 @@ import {
   signOut,
 } from "firebase/auth";
 import AlertHelper from "./AlertHelper";
+import Helpers from "./Helpers";
+import { useUserStore } from "@/stores/user";
 
 export default class AuthenticationHelper {
   auth: Auth;

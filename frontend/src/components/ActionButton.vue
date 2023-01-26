@@ -30,6 +30,7 @@ let actionButton = "action-button " + getColor();
 
 <style scoped>
 .action-button{
+  cursor: pointer;
   display: flex;
   justify-content: center;
   background-color: red;
